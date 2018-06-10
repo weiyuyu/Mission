@@ -11,7 +11,7 @@ import UIKit
 class MissionListViewController: UITableViewController {
     
     //Hard Coded mission items
-    let itemArray : [String] = ["Choreograph for Chaotic 3", "Complete Project C Phase 3", "Create mobile application side project"]
+    var itemArray : [String] = ["Choreograph for Chaotic 3", "Complete Project C Phase 3", "Create mobile application side project"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,5 +42,27 @@ class MissionListViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    //MARK: - Add New Items
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+       
+        var textField = UITextField()
+        let alert = UIAlertController(title: "addNewMissionItem", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) {
+            (action) in
+            // What happens when user hits the Add Item button on UIALert
+            self.itemArray.append(textField.text!)
+            self.tableView.reloadData()
+        }
+        
+        alert.addTextField {
+            (alertTextField) in
+            alertTextField.placeholder = "New Mission"
+            textField = alertTextField
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
 }
 
