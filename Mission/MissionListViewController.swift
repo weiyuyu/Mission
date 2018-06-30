@@ -12,10 +12,14 @@ class MissionListViewController: UITableViewController {
     
     //Hard Coded mission items
     var itemArray : [String] = ["Choreograph for Chaotic 3", "Complete Project C Phase 3", "Create mobile application side project"]
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        if let items = defaults.array(forKey: "MissionListArray") as? [String] {
+            itemArray = items
+        }
     }
 
     //MARK: - TableView Data Source Methods
@@ -53,6 +57,7 @@ class MissionListViewController: UITableViewController {
             (action) in
             // What happens when user hits the Add Item button on UIALert
             self.itemArray.append(textField.text!)
+            self.defaults.set(self.itemArray, forKey: "MissionListArray")
             self.tableView.reloadData()
         }
         
